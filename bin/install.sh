@@ -175,7 +175,8 @@ if [ $return_value -eq  $DIALOG_OK ]; then
 	    curl -s https://isc.sans.edu/api/checkapikey/$user/$nonce/$hash > $TMPDIR/checkapi
 
 if ! [ -f "$TMPDIR" ]; then
-  echo "can not find TMPDIR $TMPDIR"
+  echo "cannot find TMPDIR $TMPDIR"
+  else echo "found TMPDIR $TMPDIR"
   exit
 fi
 
