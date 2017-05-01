@@ -150,31 +150,34 @@ def _build_cli_parser():
     parser = optparse.OptionParser(usage=usage, description=desc)
 
     parser.add_option("-s", "--source", action="store", type="string", dest="target_web",
-                      help="Select a source website to scrape")
-    parser.add_option("-u", "--useragent", action="store_true", default=False, type="string", dest="useragent",
+                      help="Select a source website to scrape, e.g. https://www.example.org")
+    parser.add_option("-u", "--useragent", action="store", default=False, type="string", dest="useragent",
                       help="Select a user agent")
-    parser.add_option("-d", "--dest", action="store_true", default=False, type="string", dest="dest_web",
+    parser.add_option("-d", "--dest", action="store", default=False, type="string", dest="dest_web",
                       help="Location to store scraped website")
-    parser.add_option("-m", "--man", action="store_true", default=False, dest="man", help="Print manual")
+    parser.add_option("-m", "--man", action="store", default=False, dest="man", help="Print manual")
+    (options, args) = parser.parse_args()
 
     if options.man:
-        oParser.print_help()
+        parser.print_help()
         PrintManual()
         return
 
     if len(args) == 0:
-        oParser.print_help()
+        parser.print_help()
         return
 
     return parser
 
 
 def scrape():
+    os.system('wget -E -H -k -p -U %s %s', options.useragent, options.target_web)
 
 
 if __name__ == '__main__':
     parser = _build_cli_parser()
     options, args = parser.parse_args(sys.argv)
+    scrape()
 
     # Create a web server and define the handler to manage the
     # incoming request
